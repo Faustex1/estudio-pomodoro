@@ -1,464 +1,246 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pomodoro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inscripción — Copa LucasPazo27</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@300;500;600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-0: #0A0A0B;
-    --bg-1: #161314;
-    --ink: #F2ECE4;
-    --ink-dim: #9C938E;
-    --ink-faint: #5C5451;
-    --track: rgba(242,236,228,0.08);
-    --focus: #C22A2E;
-    --focus-soft: rgba(194,42,46,0.22);
-    --rest: #7C3336;
-    --rest-soft: rgba(124,51,54,0.22);
-    --accent: var(--focus);
-    --accent-soft: var(--focus-soft);
-    --ring-size: min(62vw, 420px);
+    --pitch-dark:#0B0D10;
+    --line:#EDE6D6;
+    --gold:#C9A227;
+    --gold-bright:#E4C465;
+    --ink:#0B241B;
+    --paper:#F5F1E6;
+    --paper-2:#ECE5D3;
+    --card:#FFFFFF;
+    --card-border:#DDD4BC;
+    --muted:#5C6B62;
+    --danger:#A6432E;
+    --shadow: 0 1px 0 rgba(11,36,27,0.06);
+    --card-glow: none;
   }
-
-  *{ box-sizing: border-box; }
-
-  html, body{
-    height: 100%;
-  }
-
-  body{
-    margin: 0;
-    background:
-      radial-gradient(circle at 50% 15%, rgba(194,42,46,0.08), transparent 55%),
-      var(--bg-0);
-    color: var(--ink);
-    font-family: 'Work Sans', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 32px 20px;
-    transition: background-color 0.6s ease;
-  }
-
-  .app{
-    width: 100%;
-    max-width: 480px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .eyebrow{
-    font-size: 0.8rem;
-    letter-spacing: 0.02em;
-    color: var(--ink-faint);
-    margin-bottom: 6px;
-  }
-
-  .title{
-    font-family: 'Zilla Slab', serif;
-    font-weight: 500;
-    font-size: clamp(1.6rem, 5vw, 2.1rem);
-    color: var(--ink);
-    margin: 0 0 30px 0;
-    text-align: center;
-  }
-
-  /* --- mode switch --- */
-  .switch{
-    display: flex;
-    gap: 4px;
-    background: var(--bg-1);
-    border: 1px solid rgba(243,238,227,0.08);
-    border-radius: 999px;
-    padding: 5px;
-    margin-bottom: 40px;
-  }
-
-  .switch button{
-    appearance: none;
-    border: none;
-    background: transparent;
-    color: var(--ink-dim);
-    font-family: 'Work Sans', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 500;
-    padding: 10px 20px;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  .switch button.active{
-    color: var(--ink);
-    font-weight: 600;
-  }
-
-  .switch button[data-mode="focus"].active{ background: var(--focus); }
-  .switch button[data-mode="rest"].active{ background: var(--rest); }
-
-  /* --- ring --- */
-  .ring-wrap{
-    position: relative;
-    width: var(--ring-size);
-    height: var(--ring-size);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 36px;
-  }
-
-  .ring-wrap svg{
-    width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
-  }
-
-  .ring-track{
-    fill: none;
-    stroke: var(--track);
-    stroke-width: 3.5;
-  }
-
-  .ring-progress{
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 3.5;
-    stroke-linecap: round;
-    transition: stroke-dashoffset 1s linear, stroke 0.4s ease;
-  }
-
-  .ring-wrap.running .ring-progress{
-    filter: drop-shadow(0 0 10px var(--accent-soft));
-  }
-
-  @media (prefers-reduced-motion: no-preference){
-    .ring-wrap.running{
-      animation: breathe 3.6s ease-in-out infinite;
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0A0C0F; --paper-2:#12161B; --card:#15191F; --card-border:#282E36;
+      --ink:#EDE8DC; --muted:#9C968A; --shadow: 0 8px 24px rgba(0,0,0,0.35);
+      --card-glow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
   }
-
-  @keyframes breathe{
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.012); }
+  :root[data-theme="dark"]{
+    --paper:#0A0C0F; --paper-2:#12161B; --card:#15191F; --card-border:#282E36;
+    --ink:#EDE8DC; --muted:#9C968A; --shadow: 0 8px 24px rgba(0,0,0,0.35);
+    --card-glow: inset 0 1px 0 rgba(255,255,255,0.04);
   }
-
-  .ring-center{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; height:100%;}
+  body{
+    background:
+      radial-gradient(700px 420px at 12% 0%, rgba(59,95,99,0.16), transparent 60%),
+      radial-gradient(600px 400px at 88% 8%, rgba(201,162,39,0.08), transparent 60%),
+      var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    min-height:100%;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+    padding-top:calc(24px + env(safe-area-inset-top, 0px));
+    padding-bottom:calc(24px + env(safe-area-inset-bottom, 0px));
   }
-
-  .time{
-    font-family: 'Zilla Slab', serif;
-    font-weight: 300;
-    font-size: clamp(3.4rem, 15vw, 5.6rem);
-    line-height: 1;
-    font-variant-numeric: lining-nums tabular-nums;
-    letter-spacing: -0.02em;
-    color: var(--ink);
+  .card{
+    width:100%; max-width:420px;
+    background:var(--card); border:1px solid var(--card-border); border-radius:16px;
+    padding:34px 28px; box-shadow:var(--shadow), var(--card-glow); text-align:center;
   }
-
-  .state-label{
-    margin-top: 10px;
-    font-size: 0.92rem;
-    color: var(--ink-dim);
-    letter-spacing: 0.01em;
+  .kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.06em;
+    color:var(--gold); margin:0 0 18px; padding:6px 12px;
+    border:1px solid rgba(201,162,39,0.4); border-radius:999px; background:rgba(201,162,39,0.08);
   }
-
-  /* --- controls --- */
-  .controls{
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    margin-bottom: 34px;
+  .kicker::before{content:"⚽"; font-size:12px;}
+  h1{
+    font-family:'Bebas Neue', sans-serif; font-weight:400;
+    font-size:clamp(34px, 8vw, 46px); margin:0 0 6px; letter-spacing:0.01em; color:var(--ink);
   }
-
-  .btn{
-    appearance: none;
-    border: none;
-    cursor: pointer;
-    font-family: 'Work Sans', sans-serif;
-    transition: transform 0.15s ease, background-color 0.3s ease, opacity 0.2s ease;
+  .lead{color:var(--muted); font-size:14px; margin:0 0 22px; line-height:1.5;}
+  input[type="text"]{
+    width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--card-border);
+    background:var(--paper-2); color:var(--ink); font-size:16px;
+    font-family:'IBM Plex Mono', monospace; text-align:center; letter-spacing:0.05em;
   }
-
-  .btn:active{ transform: scale(0.96); }
-
-  .btn-primary{
-    background: var(--accent);
-    color: var(--ink);
-    font-weight: 600;
-    font-size: 1.02rem;
-    padding: 16px 44px;
-    border-radius: 999px;
+  input[type="text"]:focus{outline:2px solid var(--gold); outline-offset:1px;}
+  input[type="text"]:disabled{opacity:0.6;}
+  button{
+    width:100%; margin-top:14px; padding:14px 16px; border-radius:10px; border:1px solid var(--gold);
+    background:var(--gold); color:var(--pitch-dark); font-family:'IBM Plex Sans', sans-serif;
+    font-weight:700; font-size:15px; cursor:pointer; transition:transform 0.15s, opacity 0.15s;
   }
-
-  .btn-secondary{
-    background: transparent;
-    color: var(--ink-dim);
-    font-size: 0.88rem;
-    font-weight: 500;
-    padding: 10px 6px;
-    border-bottom: 1px solid transparent;
-  }
-
-  .btn-secondary:hover{
-    color: var(--ink);
-    border-bottom-color: var(--ink-faint);
-  }
-
-  .btn:focus-visible{
-    outline: 2px solid var(--ink);
-    outline-offset: 3px;
-  }
-
-  /* --- cycles --- */
-  .cycles{
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-
-  .dot{
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--track);
-    transition: background-color 0.3s ease;
-  }
-
-  .dot.done{
-    background: var(--focus);
-  }
-
-  .cycles-label{
-    font-size: 0.76rem;
-    color: var(--ink-faint);
-    margin-top: 12px;
-    text-align: center;
-  }
+  button:hover:not(:disabled){transform:translateY(-1px);}
+  button:disabled{opacity:0.45; cursor:not-allowed; transform:none;}
+  .status{min-height:20px; margin-top:16px; font-size:13.5px; color:var(--muted);}
+  .status.ok{color:#3E8E5A; font-weight:600;}
+  .status.warn{color:var(--danger); font-weight:600;}
+  .foot{margin-top:22px; font-size:11.5px; color:var(--muted); opacity:0.7;}
 </style>
 </head>
 <body>
 
-<div class="app">
-  <div class="eyebrow">temporizador</div>
-  <h1 class="title">Enfoque, luego descanso</h1>
-
-  <div class="switch" role="tablist" aria-label="Modo">
-    <button data-mode="focus" class="active" role="tab" aria-selected="true">Enfoque · 25 min</button>
-    <button data-mode="rest" role="tab" aria-selected="false">Descanso · 5 min</button>
-  </div>
-
-  <div class="ring-wrap" id="ringWrap">
-    <svg viewBox="0 0 200 200">
-      <circle class="ring-track" cx="100" cy="100" r="92"></circle>
-      <circle class="ring-progress" id="ringProgress" cx="100" cy="100" r="92"></circle>
-    </svg>
-    <div class="ring-center">
-      <div class="time" id="timeDisplay">25:00</div>
-      <div class="state-label" id="stateLabel">Listo para enfocarte</div>
-    </div>
-  </div>
-
-  <div class="controls">
-    <button class="btn btn-secondary" id="resetBtn">Reiniciar</button>
-    <button class="btn btn-primary" id="startBtn">Iniciar</button>
-  </div>
-
-  <div class="cycles" id="cycles">
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </div>
-  <div class="cycles-label">pomodoros completados hoy</div>
+<div class="card">
+  <div class="kicker">INSCRIPCIÓN</div>
+  <h1>Copa LucasPazo27</h1>
+  <p class="lead" id="lead">Poné la contraseña que te dieron para anotarte en el torneo.</p>
+  <input type="text" id="passInput" placeholder="Tu contraseña" autocomplete="off" autocapitalize="off" spellcheck="false" disabled>
+  <button type="button" id="submitBtn" disabled>Conectando…</button>
+  <p class="status" id="status" aria-live="polite"></p>
+  <p class="foot">Dejá esta página abierta hasta ver la confirmación.</p>
 </div>
 
 <script>
-  const DURATIONS = { focus: 25 * 60, rest: 5 * 60 };
-  const LABELS_READY = { focus: 'Listo para enfocarte', rest: 'Listo para descansar' };
-  const LABELS_RUNNING = { focus: 'Enfocado', rest: 'Descansando' };
-  const LABELS_PAUSED = { focus: 'En pausa', rest: 'En pausa' };
-
-  let mode = 'focus';
-  let remaining = DURATIONS.focus;
-  let timerId = null;
-  let running = false;
-  let completedCycles = 0;
-
-  const timeDisplay = document.getElementById('timeDisplay');
-  const stateLabel = document.getElementById('stateLabel');
-  const startBtn = document.getElementById('startBtn');
-  const resetBtn = document.getElementById('resetBtn');
-  const ringWrap = document.getElementById('ringWrap');
-  const ringProgress = document.getElementById('ringProgress');
-  const switchButtons = document.querySelectorAll('.switch button');
-  const dots = document.querySelectorAll('.dot');
-
-  const RADIUS = 92;
-  const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
-  ringProgress.style.strokeDasharray = CIRCUMFERENCE;
-
-  function formatTime(sec){
-    const m = Math.floor(sec / 60).toString().padStart(2, '0');
-    const s = Math.floor(sec % 60).toString().padStart(2, '0');
-    return m + ':' + s;
-  }
-
-  function updateDisplay(){
-    timeDisplay.textContent = formatTime(remaining);
-    const total = DURATIONS[mode];
-    const fraction = remaining / total;
-    ringProgress.style.strokeDashoffset = CIRCUMFERENCE * (1 - fraction);
-  }
-
-  function setMode(newMode, resetTime = true){
-    mode = newMode;
-    document.documentElement.style.setProperty('--accent', mode === 'focus' ? 'var(--focus)' : 'var(--rest)');
-    document.documentElement.style.setProperty('--accent-soft', mode === 'focus' ? 'var(--focus-soft)' : 'var(--rest-soft)');
-    switchButtons.forEach(btn => {
-      const isActive = btn.dataset.mode === mode;
-      btn.classList.toggle('active', isActive);
-      btn.setAttribute('aria-selected', isActive);
-    });
-    if (resetTime){
-      remaining = DURATIONS[mode];
-    }
-    updateDisplay();
-    updateStateLabel();
-  }
-
-  function updateStateLabel(){
-    if (running){
-      stateLabel.textContent = LABELS_RUNNING[mode];
-    } else if (remaining < DURATIONS[mode]){
-      stateLabel.textContent = LABELS_PAUSED[mode];
-    } else {
-      stateLabel.textContent = LABELS_READY[mode];
-    }
-  }
-
-  function tick(){
-    remaining -= 1;
-    if (remaining <= 0){
-      remaining = 0;
-      updateDisplay();
-      finishSession();
-      return;
-    }
-    updateDisplay();
-  }
-
-  function start(){
-    if (running) return;
-    running = true;
-    ringWrap.classList.add('running');
-    startBtn.textContent = 'Pausar';
-    updateStateLabel();
-    timerId = setInterval(tick, 1000);
-  }
-
-  function pause(){
-    running = false;
-    ringWrap.classList.remove('running');
-    startBtn.textContent = 'Continuar';
-    clearInterval(timerId);
-    updateStateLabel();
-  }
-
-  function reset(){
-    clearInterval(timerId);
-    running = false;
-    ringWrap.classList.remove('running');
-    startBtn.textContent = 'Iniciar';
-    remaining = DURATIONS[mode];
-    updateDisplay();
-    updateStateLabel();
-  }
-
-  function finishSession(){
-    clearInterval(timerId);
-    running = false;
-    ringWrap.classList.remove('running');
-    playAlarm();
-
-    if (mode === 'focus'){
-      completedCycles = Math.min(completedCycles + 1, dots.length);
-      updateDots();
-      setMode('rest');
-    } else {
-      setMode('focus');
-    }
-    startBtn.textContent = 'Iniciar';
-    updateStateLabel();
-  }
-
-  function updateDots(){
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('done', i < completedCycles);
+(function(){
+  const PEER_CDNS = [
+    'https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js',
+    'https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js'
+  ];
+  function loadPeerJs(){
+    if(window.Peer) return Promise.resolve(window.Peer);
+    return new Promise((resolve, reject)=>{
+      let i = 0;
+      const next = ()=>{
+        if(i >= PEER_CDNS.length){ reject(new Error('cdn')); return; }
+        const sc = document.createElement('script');
+        sc.src = PEER_CDNS[i++];
+        sc.async = true;
+        sc.onload = ()=>{ window.Peer ? resolve(window.Peer) : next(); };
+        sc.onerror = ()=>{ sc.remove(); next(); };
+        document.head.appendChild(sc);
+      };
+      next();
     });
   }
 
-  // --- Alarma: suena exactamente 2 segundos al terminar ---
-  function playAlarm(){
-    try{
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      const ctx = new AudioCtx();
-      const duration = 2; // segundos exactos
-      const now = ctx.currentTime;
+  function getSala(){
+    try{ return new URLSearchParams(location.search).get('sala'); }catch(e){ return null; }
+  }
+  const SALA_ID = getSala();
 
-      const beepPattern = [0, 0.4, 0.8, 1.2]; // inicios de cada beep dentro de los 2s
-      beepPattern.forEach(offset => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.value = 880;
-        osc.connect(gain);
-        gain.connect(ctx.destination);
+  const passInput = document.getElementById('passInput');
+  const submitBtn = document.getElementById('submitBtn');
+  const statusEl = document.getElementById('status');
+  const leadEl = document.getElementById('lead');
 
-        const start = now + offset;
-        const end = start + 0.32;
-        gain.gain.setValueAtTime(0, start);
-        gain.gain.linearRampToValueAtTime(0.35, start + 0.02);
-        gain.gain.linearRampToValueAtTime(0, end);
+  function setStatus(text, cls){
+    statusEl.textContent = text || '';
+    statusEl.className = 'status' + (cls ? ' ' + cls : '');
+  }
 
-        osc.start(start);
-        osc.stop(end);
-      });
+  if(!SALA_ID){
+    leadEl.textContent = 'Este link no es válido.';
+    setStatus('Pedile al organizador que te pase el link correcto.', 'warn');
+    return;
+  }
 
-      setTimeout(() => ctx.close(), (duration + 0.5) * 1000);
-    } catch(e){
-      console.warn('No se pudo reproducir la alarma', e);
+  let peer = null, conn = null, reconnectTimer = null, reqTimer = null, confirmed = false;
+
+  function setConnState(state){
+    if(confirmed) return;
+    if(state === 'connecting'){
+      passInput.disabled = true; submitBtn.disabled = true;
+      submitBtn.textContent = 'Conectando…';
+    }else if(state === 'live'){
+      passInput.disabled = false; submitBtn.disabled = false;
+      submitBtn.textContent = 'Anotarme';
+    }else if(state === 'offline'){
+      passInput.disabled = true; submitBtn.disabled = true;
+      submitBtn.textContent = 'Conectando…';
+      setStatus('Sin conexión con el organizador. ¿Tiene la página abierta? Reintentando…', 'warn');
+    }else if(state === 'error'){
+      passInput.disabled = true; submitBtn.disabled = true;
+      submitBtn.textContent = 'Conectando…';
+      setStatus('No se pudo conectar. Reintentando…', 'warn');
     }
   }
 
-  startBtn.addEventListener('click', () => {
-    if (running) pause(); else start();
-  });
+  function scheduleReconnect(){
+    clearTimeout(reconnectTimer);
+    reconnectTimer = setTimeout(connectToHost, 3000);
+  }
 
-  resetBtn.addEventListener('click', reset);
+  function connectToHost(){
+    if(!peer || peer.destroyed || !peer.open) return;
+    if(conn){ try{ conn.close(); }catch(e){} }
+    const c = peer.connect(SALA_ID, { reliable:true, serialization:'json' });
+    conn = c;
+    let opened = false;
+    const failTimer = setTimeout(()=>{
+      if(!opened && conn === c){ try{ c.close(); }catch(e){} setConnState('offline'); scheduleReconnect(); }
+    }, 12000);
+    c.on('open', ()=>{ opened = true; clearTimeout(failTimer); setConnState('live'); if(!statusEl.classList.contains('warn')) setStatus(''); });
+    c.on('data', onMsg);
+    c.on('close', ()=>{ clearTimeout(failTimer); if(conn !== c) return; setConnState('offline'); scheduleReconnect(); });
+    c.on('error', ()=>{ clearTimeout(failTimer); if(conn !== c) return; setConnState('offline'); scheduleReconnect(); });
+  }
 
-  switchButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (btn.dataset.mode === mode) return;
-      clearInterval(timerId);
-      running = false;
-      ringWrap.classList.remove('running');
-      startBtn.textContent = 'Iniciar';
-      setMode(btn.dataset.mode);
+  function onMsg(msg){
+    if(!msg || typeof msg !== 'object' || msg.t !== 'reg_resultado') return;
+    clearTimeout(reqTimer);
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Anotarme';
+    if(msg.ok){
+      confirmed = true;
+      passInput.disabled = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Anotado ✓';
+      setStatus('✅ Listo, ' + msg.nombre + ' — quedaste anotado.', 'ok');
+    }else if(msg.motivo === 'cerrado'){
+      setStatus('Las inscripciones están cerradas por ahora.', 'warn');
+    }else{
+      setStatus('Esa contraseña no es válida. Revisala y probá de nuevo.', 'warn');
+    }
+  }
+
+  function submit(){
+    if(confirmed) return;
+    const pass = (passInput.value || '').trim();
+    if(!pass){ setStatus('Escribí tu contraseña.', 'warn'); return; }
+    if(!(conn && conn.open)){ setStatus('Todavía estamos conectando… esperá un segundo.', 'warn'); return; }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando…';
+    setStatus('');
+    clearTimeout(reqTimer);
+    reqTimer = setTimeout(()=>{
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Anotarme';
+      setStatus('No hubo respuesta. Probá de nuevo.', 'warn');
+    }, 8000);
+    try{ conn.send({ t:'reg_intento', contrasena: pass }); }catch(e){}
+  }
+
+  submitBtn.addEventListener('click', submit);
+  passInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') submit(); });
+
+  async function init(){
+    setConnState('connecting');
+    let P;
+    try{ P = await loadPeerJs(); }
+    catch(e){ setConnState('error'); return; }
+    const p = new P();
+    peer = p;
+    p.on('open', connectToHost);
+    p.on('disconnected', ()=>{ try{ if(!p.destroyed) p.reconnect(); }catch(e){} });
+    p.on('error', (err)=>{
+      const type = err && err.type;
+      if(type === 'peer-unavailable'){ setConnState('offline'); scheduleReconnect(); }
+      else{ setConnState('error'); if(p.open) scheduleReconnect(); }
     });
-  });
-
-  setMode('focus');
+  }
+  init();
+})();
 </script>
-
 </body>
 </html>
